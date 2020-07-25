@@ -7,15 +7,20 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainAty">
+        <activity android:name=".MainAty"/>
+
+<!--        登陆页-->
+        <activity android:name=".LoginAty" />
+
+<!--        首页-->
+        <activity
+            android:name=".HomeAty"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".LoginAty" />
     </application>
 
 </manifest>

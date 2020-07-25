@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/home_navigation"
+    app:startDestination="@+id/home_im">
+
+    <fragment
+        android:id="@+id/home_discover"
+        android:name="com.hzy.CheeseLive.ui.home.HomeFragment"
+        android:label="@string/title_home_discovery"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/home_im"
+        android:name="com.hzy.CheeseLive.ui.dashboard.DashboardFragment"
+        android:label="@string/title_home_im"
+        tools:layout="@layout/fragment_dashboard" />
+
+    <fragment
+        android:id="@+id/home_user"
+        android:name="com.hzy.CheeseLive.ui.notifications.NotificationsFragment"
+        android:label="@string/title_home_user"
+        tools:layout="@layout/fragment_notifications" />
+</navigation>

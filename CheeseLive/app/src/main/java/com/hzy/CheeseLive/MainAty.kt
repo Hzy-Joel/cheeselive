@@ -9,7 +9,7 @@ class MainAty : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_aty)
         login.setOnClickListener {
-            LoginAty.Build(this).build()
+            HomeAty.Build(this).build()
         }
     }
 }

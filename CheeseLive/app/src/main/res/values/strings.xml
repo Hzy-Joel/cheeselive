@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">CheeseLive</string>
+    <string name="title_home_aty">首页</string>
+    <string name="title_home_discovery">发现</string>
+    <string name="title_home_im">消息</string>
+    <string name="title_home_user">我的</string>
+
+
 </resources>
