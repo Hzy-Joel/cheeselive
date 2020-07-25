@@ -1,0 +1,111 @@
+import java.util.function.Function
+import java.util.function.Predicate
+import java.util.stream.Collectors
+
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.3"
+
+    defaultConfig {
+        applicationId "com.hzy.CheeseLive"
+        minSdkVersion 19
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    // 使用Kotlin实验特性
+    androidExtensions {
+        experimental = true
+    }
+
+    //汇总子模块目录
+    def src_root = new File(projectDir, 'src')
+    def gp_modules = src_root.list().toList().stream()
+            .filter(
+                    new Predicate<String>() {
+                        @Override
+
+                        boolean test(String name) {
+                            return name == 'main' || (name.startsWith('gp_') && new File(src_root, name).isDirectory())
+                        }
+                    }).collect(Collectors.toList())
+
+    def module_src = gp_modules.stream()
+            .map(
+                    new Function() {
+                        @Override
+                        Object apply(Object moduleName) {
+                            return ['src', moduleName, 'java'].join('/')
+                        }
+                    })
+            .collect(Collectors.toList())
+
+    def module_res = gp_modules.stream()
+            .map(
+                    new Function() {
+                        @Override
+                        Object apply(Object moduleName) {
+                            return ['src', moduleName, 'res'].join('/')
+                        }
+                    }).collect(Collectors.toList())
+
+    def module_aidl = gp_modules.stream()
+            .map(new Function() {
+                @Override
+                Object apply(Object moduleName) {
+                    return ['src', moduleName, 'aidl'].join('/')
+                }
+            }).collect(Collectors.toList())
+
+    sourceSets {
+        main {
+            manifest.srcFile "src/main/AndroidManifest.xml"
+            java.srcDirs = module_src
+            res.srcDirs = module_res
+            aidl.srcDirs = module_aidl
+            assets.srcDirs = ['assets']
+            jniLibs.srcDirs = ['libs', 'jni']
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation project(':Resource')
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation 'androidx.core:core-ktx:1.3.1'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    testImplementation 'junit:junit:4.13'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+
+}
